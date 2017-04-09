@@ -13,6 +13,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private ListView mLv;
@@ -30,34 +31,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mLv = (ListView) findViewById(R.id.lv);
 
-
-
-
-
         MyTask my = new MyTask();
         my.execute(MyUrls.MYURL);
 // configure the SlidingMenu
         SlidingMenu menu = new SlidingMenu(this);
+
         menu.setMode(SlidingMenu.LEFT);
+
+        //设置可以左右滑动
+//        menu.setMode(SlidingMenu.LEFT_RIGHT);
+//        menu.setSecondaryMenu(getLeftMenu());//设置右侧菜单
+//
+//        menu.setSecondaryShadowDrawable(R.color.beige);//右侧菜单的阴影图片
         // 设置触摸屏幕的模式
         menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        //设置阴影图片的宽度
         menu.setShadowWidthRes(R.dimen.shadow_width);
+        //设置阴影图片
         menu.setShadowDrawable(R.color.colorAccent);
 
         // 设置滑动菜单视图的宽度
         menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         // 设置渐入渐出效果的值
         menu.setFadeDegree(0.35f);
-        /**
-         * SLIDING_WINDOW will include the Title/ActionBar in the content
-         * section of the SlidingMenu, while SLIDING_CONTENT does not.
-         */
+        //设置SlidingMenu菜单的宽度
+        menu.setBehindWidth(600);
+//使SlidingMenu附加在Activity上
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-
         //为侧滑菜单设置布局
         menu.setMenu(getLeftMenu());
-
-
 
         mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,33 +83,26 @@ public class MainActivity extends AppCompatActivity {
         //得到menu的View
         View v = inflater.inflate(R.layout.lift_menu, null);
         ListView lv = (ListView) v.findViewById(R.id.lf_lv);
-        lv.setAdapter( new MyLifeAdapter(getData(),MainActivity.this));
+        lv.setAdapter(new MyLifeAdapter(getData(), MainActivity.this));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
                 //监听listview item 点击
-                Toast.makeText(MainActivity.this,"111",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "111", Toast.LENGTH_SHORT).show();
             }
         });
         return v;
     }
+
     private List<MyLeft> getData() {
         mLml = new ArrayList<>();
-        mLml.add(new MyLeft(R.mipmap.ic_launcher,"好友动态"));
-
-        mLml.add(new MyLeft(R.mipmap.ic_launcher,"我的话题"));
-        mLml.add(new MyLeft(R.mipmap.ic_launcher,"收藏"));
-        mLml.add(new MyLeft(R.mipmap.ic_launcher,"活动"));
-        mLml.add(new MyLeft(R.mipmap.ic_launcher,"商城"));
-
-//        List<String> data = new ArrayList<>();
-//
-//        data.add("测试数据1");
-//        data.add("测试数据2");
-//        data.add("测试数据3");
-//        data.add("测试数据4");
+        mLml.add(new MyLeft(R.mipmap.ic_launcher, "好友动态"));
+        mLml.add(new MyLeft(R.mipmap.ic_launcher, "我的话题"));
+        mLml.add(new MyLeft(R.mipmap.ic_launcher, "收藏"));
+        mLml.add(new MyLeft(R.mipmap.ic_launcher, "活动"));
+        mLml.add(new MyLeft(R.mipmap.ic_launcher, "商城"));
         return mLml;
     }
 
